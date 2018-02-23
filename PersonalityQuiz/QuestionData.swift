@@ -8,16 +8,20 @@
 
 import Foundation
 
+// Struct that holds a question
 struct Question {
     var text: String
     var type: ResponseType
     var answers: [Answer]
 }
 
+// The response type enumerator
 enum ResponseType {
     case single, multiple, ranged
 }
 
+// Struct that holds the answer and the personality type
+// it corresponds to
 struct Answer {
     var text: String
     var type: PersonType

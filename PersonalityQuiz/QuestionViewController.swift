@@ -10,16 +10,16 @@ import UIKit
 
 class QuestionViewController: UIViewController {
 
+    // Updates the UI after the view has loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
-
-        // Do any additional setup after loading the view.
     }
     
+    // Updates UI: makes sure the new question is displayed, based on current questionIndex
     func updateUI() {
         singleStackView.isHidden = true
-        
+    
         let currentQuestion = questions[questionIndex]
         let currentAnswers = currentQuestion.answers
         let totalProgress = Float(questionIndex) / Float(questions.count)
@@ -29,26 +29,10 @@ class QuestionViewController: UIViewController {
         questionProgressView.setProgress(totalProgress, animated: true)
         
         updateSingleStack(using: currentAnswers)
-        
-
-        
-        
-        
         singleStackView.isHidden = false
-        
-        
-        
-        /*
-        switch currentQuestion.type {
-        case .single:
-            singleStackView.isHidden = false
-        case .multiple:
-            
-        case .ranged:
-         
-        }*/
     }
     
+    // Update single answer question stack view
     func updateSingleStack(using answers: [Answer]) {
         singleStackView.isHidden = false
         singleButton1.setTitle(answers[0].text, for: .normal)
@@ -60,16 +44,16 @@ class QuestionViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
+    // Variable that holds the questions
     var questions: [Question] = [
             Question(text: "Wat is je favoriete eten?", type: .single,
                      answers: [
                         Answer(text:"Een of ander vega(n) prutje", type: .emma),
                         Answer(text:"Een Snickers van de VIA", type: .viaNerd),
                         Answer(text:"Dat wat je moeder 's avonds kookt", type: .verlegenNerd),
-                        Answer(text:"FSC-gekeurde sushi", type: .hippie)
+                        Answer(text:"MSC-gekeurde sushi", type: .hippie)
                 ]
             ),
             Question(text: "Waar woon je?", type: .single,
@@ -91,10 +75,10 @@ class QuestionViewController: UIViewController {
         ]
     
     var questionIndex = 0
-    
     var answersChosen: [Answer] = []
     
-    
+    // Function that stores the answer in currentAnswer if the button is pressed,
+    // and moves to the next question
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
         let currentAnswer = questions[questionIndex].answers
         
@@ -113,6 +97,8 @@ class QuestionViewController: UIViewController {
         nextQuestion()
     }
 
+    // Updates internal index and performs the segue to move to the
+    // next question
     func nextQuestion() {
         questionIndex += 1
         
@@ -123,6 +109,7 @@ class QuestionViewController: UIViewController {
         }
     }
     
+    // Prepare function to move to the Results ViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ResultsSegue" {
             let resultsViewController = segue.destination as! ResultsViewController
@@ -130,7 +117,7 @@ class QuestionViewController: UIViewController {
         }
     }
     
-    
+    // Outlet definitions
     @IBOutlet weak var questionLabel: UILabel!
     
     @IBOutlet weak var singleStackView: UIStackView!
